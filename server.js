@@ -1,30 +1,36 @@
 import express from "express";
 import colors from "colors";
 import dotenv from "dotenv";
-import userRouter from "./routes/users.js";
-import authRouter from "./routes/auth.js";
-import mongodbConnections from "./config/mongodb.js";
+import mongoDBConnect from "./config/mongoDB.js";
+import userRouter from "./route/user.js";
+import authRouter from "./route/auth.js";
+import errorHandler from "./middlewares/errorhandler.js";
+import cookieParser from "cookie-parser";
 
-// Initialiazation
+// initialization
 const app = express();
 dotenv.config();
 
-// Env Variables
+// environment vars
 const PORT = process.env.PORT || 9090;
 
-// Set Middlewares
+// set middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Static Folder
+// static folder
 app.use(express.static("public"));
+app.use(cookieParser())
 
-// Routes
-app.use("/api/v1/user/", userRouter);
-app.use("/api/v1/auth/", authRouter);
+// routing
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/auth", authRouter);
 
-// Server Init
+// error handler
+app.use(errorHandler);
+
+// app listen
 app.listen(PORT, () => {
-  console.log(`Server is Running On PORT ${PORT}`.bgGreen.black);
-  mongodbConnections();
+  mongoDBConnect();
+  console.log(`server is running on port ${PORT}`.bgGreen.black);
 });

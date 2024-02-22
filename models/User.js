@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-// Create User Schema
+// create user schema
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -10,13 +10,11 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      trim: true,
-      unique: true,
+      trim: true
     },
     phone: {
       type: String,
-      trim: true,
-      unique: true,
+      trim: true
     },
     password: {
       type: String,
@@ -27,12 +25,17 @@ const userSchema = mongoose.Schema(
       default: null,
       trim: true,
     },
-    address: {
+    location: {
       type: String,
       default: null,
       trim: true,
     },
-    bloodType: {
+    bloodGroup: {
+      type: String,
+      default: null,
+      trim: true,
+    },
+    profession: {
       type: String,
       default: null,
       trim: true,
@@ -50,17 +53,18 @@ const userSchema = mongoose.Schema(
     gallery: {
       type: [String],
     },
-    isActive: {
+    accessToken: {
+      type: String,
+      default: null,
+      trim: true,
+    },
+    isActivate: {
       type: Boolean,
       default: false,
     },
     isVerified: {
       type: Boolean,
       default: false,
-    },
-    accessToken: {
-      type: String,
-      default: null,
     },
     status: {
       type: Boolean,
@@ -74,5 +78,5 @@ const userSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-// export default
+// export schema
 export default mongoose.model("User", userSchema);
