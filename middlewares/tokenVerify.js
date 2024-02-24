@@ -29,6 +29,9 @@ const tokenVerify = (req, res, next) => {
             } else if (isMobile(decode.auth)) {
                 me = await User.findOne({email: decode.auth}).select("-password")
             }
+
+            req.me = me
+            next()
     
         }))
         

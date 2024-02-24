@@ -165,6 +165,7 @@ export const accountActivationByOTP = asyncHandler(async (req, res) => {
  * @route /api/v1/auth/login
  * @access public
  */
+
 export const login = asyncHandler(async (req, res) => {
   // get data
   const { auth, password } = req.body;
@@ -227,6 +228,31 @@ export const login = asyncHandler(async (req, res) => {
 });
 
 export const profile = (req,res)=>{
-
+console.log(req.me);
 }
 
+/**
+ * @description  get Logged In User data
+ * @method GET
+ * @route /api/v1/auth/me
+ * @access private
+ */
+
+export const getLoggedInUser = asyncHandler(async(req, res)=>{
+  if (!req.me) {
+    return res.status(404).json({message: 'Logged in user not found'})
+  }
+  res.status(200).json({auth: req.me })
+})
+
+/**
+ * @description  User logout
+ * @method POST
+ * @route /api/v1/auth/logout
+ * @access private
+ */
+
+export const userLogout = asyncHandler(async(req, res)=>{
+res.clearCookie("accessToken")
+  res.status(200).json({message: "Logout Successful" })
+})

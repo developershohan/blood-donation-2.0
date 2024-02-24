@@ -1,9 +1,11 @@
 import express from "express";
 import {
   accountActivationByOTP,
+  getLoggedInUser,
   login,
   profile,
   registerUser,
+  userLogout,
 } from "../controllers/authController.js";
 import tokenVerify from "../middlewares/tokenVerify.js";
 
@@ -14,7 +16,8 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/account-activate-by-otp/:token", accountActivationByOTP);
 router.post("/login", login);
-router.get("/profile", tokenVerify, profile)
+router.get("/me", tokenVerify, getLoggedInUser)
+router.post("/logout",tokenVerify, userLogout);
 
 // export default
 export default router;
