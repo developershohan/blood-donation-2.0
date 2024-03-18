@@ -13,6 +13,10 @@ import {
 import { sendSMS } from "../utils/sendSMS.js";
 import { AccountActivationEmail } from "../mails/AccountActivationEmail.js";
 
+
+
+
+
 /**
  * @description  User Register
  * @method POST
@@ -86,7 +90,8 @@ export const registerUser = asyncHandler(async (req, res) => {
       // send otp
       await sendSMS(
         auth,
-        `Hello ${name}, You Account activation OTP is ${otp}`
+        ` Hello ${name}, Here is your OTP ${otp}
+        `
       );
     }
   }
@@ -95,12 +100,14 @@ export const registerUser = asyncHandler(async (req, res) => {
   res.status(201).json({ user: user, message: "User data created successful" });
 });
 
+
 /**
  * @description  User Account Activation
  * @method POST
  * @route /api/v1/auth/account-activate-by-otp/:token
  * @access public
  */
+
 export const accountActivationByOTP = asyncHandler(async (req, res) => {
   // get token
   const { token } = req.params;
@@ -166,14 +173,13 @@ export const accountActivationByOTP = asyncHandler(async (req, res) => {
  * @access public
  */
 
-export const login = asyncHandler(async (req, res) => {
+export const login = asyncHandler(async (req, res) => { 
   // get data
   const { auth, password } = req.body;
 
   // validate login
   if (!auth || !password) {
     return res.status(400).json({ message: `All fields are required` });
-
   }
 
   // check user auth
@@ -227,9 +233,10 @@ export const login = asyncHandler(async (req, res) => {
   res.status(200).json({ accessToken, user: loginUser, message: `login successfully` })
 });
 
-export const profile = (req,res)=>{
-console.log(req.me);
-}
+
+// export const profile = (req,res)=>{
+// console.log(req.me);
+// }
 
 /**
  * @description  get Logged In User data

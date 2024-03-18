@@ -3,7 +3,6 @@ import {
   accountActivationByOTP,
   getLoggedInUser,
   login,
-  profile,
   registerUser,
   userLogout,
 } from "../controllers/authController.js";
