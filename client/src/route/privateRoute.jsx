@@ -2,6 +2,6 @@
 
 // create public route
 export const privateRoute = [{
-    path: "/home",
-    element: "Hello"
+    path: "/",
+    element: "Hello App"
 }]
