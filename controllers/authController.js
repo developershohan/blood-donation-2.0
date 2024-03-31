@@ -13,10 +13,6 @@ import {
 import { sendSMS } from "../utils/sendSMS.js";
 import { AccountActivationEmail } from "../mails/AccountActivationEmail.js";
 
-
-
-
-
 /**
  * @description  User Register
  * @method POST
@@ -100,7 +96,6 @@ export const registerUser = asyncHandler(async (req, res) => {
   res.status(201).json({ user: user, message: "User data created successful" });
 });
 
-
 /**
  * @description  User Account Activation
  * @method POST
@@ -164,8 +159,6 @@ export const accountActivationByOTP = asyncHandler(async (req, res) => {
     .json({ user: activateUser, message: "User activation successful" });
 });
 
-
-
 /**
  * @description  User Account Login
  * @method POST
@@ -173,7 +166,7 @@ export const accountActivationByOTP = asyncHandler(async (req, res) => {
  * @access public
  */
 
-export const login = asyncHandler(async (req, res) => { 
+export const login = asyncHandler(async (req, res) => {
   // get data
   const { auth, password } = req.body;
 
@@ -183,43 +176,38 @@ export const login = asyncHandler(async (req, res) => {
   }
 
   // check user auth
-  let loginUser = null
+  let loginUser = null;
 
   if (isEmail(auth)) {
     // find login user
-    loginUser = await User.findOne({ email: auth })
+    loginUser = await User.findOne({ email: auth });
     if (!loginUser) {
-
       return res.status(400).json({ message: `Email not found` });
     }
-
   } else if (isMobile(auth)) {
     // find login user
-    loginUser = await User.findOne({ phone: auth })
+    loginUser = await User.findOne({ phone: auth });
 
     if (!loginUser) {
       return res.status(400).json({ message: `phone not found` });
-
     }
-
   } else {
-    return res.status(400).json({ message: `User must have an email or mobile number` });
+    return res
+      .status(400)
+      .json({ message: `User must have an email or mobile number` });
   }
 
-
-
   // check password
-  const passwordCheck = await bcrypt.compare(password, loginUser.password)
+  const passwordCheck = await bcrypt.compare(password, loginUser.password);
 
   if (!passwordCheck) {
-
     return res.status(400).json({ message: `Wrong password` });
   }
 
   // create login user token
   const accessToken = jwt.sign({ auth: auth }, process.env.USER_LOGIN_SECRET, {
-    expiresIn: "365d"
-  })
+    expiresIn: "365d",
+  });
 
   // set token
   res.cookie("accessToken", accessToken, {
@@ -227,12 +215,13 @@ export const login = asyncHandler(async (req, res) => {
     secure: process.env.APP_ENV == "Development" ? false : true,
     sameSite: "strict",
     path: "/",
-    maxAge: 1000 * 60 * 60 * 24 * 365
-  })
+    maxAge: 1000 * 60 * 60 * 24 * 365,
+  });
 
-  res.status(200).json({ accessToken, user: loginUser, message: `login successfully` })
+  res
+    .status(200)
+    .json({ accessToken, user: loginUser, message: `login successfully` });
 });
-
 
 // export const profile = (req,res)=>{
 // console.log(req.me);
@@ -245,12 +234,12 @@ export const login = asyncHandler(async (req, res) => {
  * @access private
  */
 
-export const getLoggedInUser = asyncHandler(async(req, res)=>{
+export const getLoggedInUser = asyncHandler(async (req, res) => {
   if (!req.me) {
-    return res.status(404).json({message: 'Logged in user not found'})
+    return res.status(404).json({ message: "Logged in user not found" });
   }
-  res.status(200).json({auth: req.me })
-})
+  res.status(200).json({ auth: req.me });
+});
 
 /**
  * @description  User logout
@@ -259,7 +248,7 @@ export const getLoggedInUser = asyncHandler(async(req, res)=>{
  * @access private
  */
 
-export const userLogout = asyncHandler(async(req, res)=>{
-res.clearCookie("accessToken")
-  res.status(200).json({message: "Logout Successful" })
-})
+export const userLogout = asyncHandler(async (req, res) => {
+  res.clearCookie("accessToken");
+  res.status(200).json({ message: "Logout Successful" });
+});
