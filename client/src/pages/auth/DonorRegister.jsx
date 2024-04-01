@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom"
 import bloodLogo from "../../assets/frontend/img/blood-logo.png"
-const Register = () => {
+
+const DonorRegister = () => {
   return (
     <div>
       <div className="content top-space">
@@ -20,8 +21,8 @@ const Register = () => {
                   <div className="col-md-12 col-lg-6 login-right">
                     <div className="login-header">
                       <h3>
-                        Patient Register
-                        <Link to="/donor-register">Are you a Donor?</Link>
+                        Donor Register
+                        <Link to="/register">Are you a Patient?</Link>
                       </h3>
                     </div>
                     {/* Register Form */}
@@ -78,7 +79,7 @@ const Register = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Register;
+export default DonorRegister

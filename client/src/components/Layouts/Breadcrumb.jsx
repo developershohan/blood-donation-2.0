@@ -4,7 +4,7 @@ import { generatePageTitle } from "../../healpers/Healpers";
 const Breadcrumb = () => {
   const { pathname } = useLocation();
 
-  const breadCrumbList = ["/login", "/register"];
+  const breadCrumbList = ["/login", "/register","/donor-register"];
 
   if (!breadCrumbList.includes(pathname)) {
     return (

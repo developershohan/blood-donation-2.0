@@ -1,4 +1,6 @@
-import React from 'react'
+import {Link} from "react-router-dom"
+
+import bloodLogo from "../../assets/frontend/img/blood-logo.png"
 
 const Login = () => {
   return (
@@ -12,7 +14,7 @@ const Login = () => {
           <div className="row align-items-center justify-content-center">
             <div className="col-md-7 col-lg-6 login-left">
               <img
-                src="assets/img/login-banner.png"
+                src={bloodLogo}
                 className="img-fluid"
                 alt="Doccure Login"
               />
@@ -20,7 +22,7 @@ const Login = () => {
             <div className="col-md-12 col-lg-6 login-right">
               <div className="login-header">
                 <h3>
-                  Login <span>Doccure</span>
+                  Login
                 </h3>
               </div>
               <form action="index.html">
@@ -60,7 +62,7 @@ const Login = () => {
                   </div>
                 </div>
                 <div className="text-center dont-have">
-                  Don’t have an account? <a href="register.html">Register</a>
+                  Don’t have an account? <Link to="/register">Register</Link>
                 </div>
               </form>
             </div>

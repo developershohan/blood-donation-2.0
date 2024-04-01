@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import logo from "../../assets/frontend/img/logo.png"
 import avatar from "../../assets/frontend/img/patients/patient.jpg"
+import Avatar from "./Avatar/Avatar"
 
 const Header = () => {
   return (
@@ -156,6 +157,7 @@ const Header = () => {
                                                     <i className="fa-solid fa-circle-xmark" />
                                                 </div>
                                                 <a href="product-description.html">
+                                                    <Avatar/>
                                                     <img
                                                         className="avatar-img rounded"
                                                         src="assets/img/products/product.jpg"
@@ -365,12 +367,7 @@ const Header = () => {
                                     data-bs-toggle="dropdown"
                                 >
                                     <span className="user-img">
-                                        <img
-                                            className="rounded-circle"
-                                            src={avatar}
-                                            width={31}
-                                            alt="Darren Elder"
-                                        />
+                                        <Avatar url="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png" className="rounded-circle"/>
                                     </span>
                                 </a>
                                 <div className="dropdown-menu dropdown-menu-end">

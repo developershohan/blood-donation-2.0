@@ -1,3 +1,5 @@
+import Avatar from "../../components/Layouts/Avatar/Avatar";
+
 const Dashboard = () => {
   return (
     <>
@@ -10,10 +12,8 @@ const Dashboard = () => {
                 <div className="widget-profile pro-widget-content">
                   <div className="profile-info-widget">
                     <a href="#" className="booking-doc-img">
-                      <img
-                        src="assets/img/patients/patient.jpg"
-                        alt="User Image"
-                      />
+                      <Avatar />
+
                     </a>
                     <div className="profile-det-info">
                       <h3>Richard Wilson</h3>
@@ -344,11 +344,8 @@ const Dashboard = () => {
                                       <a
                                         href="doctor-profile.html"
                                         className="avatar avatar-sm me-2">
-                                        <img
-                                          className="avatar-img rounded-circle"
-                                          src="assets/img/doctors/doctor-thumb-01.jpg"
-                                          alt="User Image"
-                                        />
+                                          <Avatar url="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png" />
+
                                       </a>
                                       <a href="doctor-profile.html">
                                         Dr. Ruby Perrin <span>Dental</span>
