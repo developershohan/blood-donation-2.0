@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import bloodLogo from "../../assets/frontend/img/blood-logo.png";
 import useForm from "../../hooks/useForm";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { registerPatient } from "../../features/auth/authApiSlice";
+import createToast from "../../utils/toastify";
+import { authSelector, setMessageEmpty } from "../../features/auth/authSlice";
+import { useEffect } from "react";
 const Register = () => {
   const dispatch = useDispatch();
   const { input, handleInputChange, resetForm } = useForm({
@@ -10,9 +13,29 @@ const Register = () => {
     auth: "",
     password: "",
   });
+
+  const {error,message,loader} = useSelector(authSelector)
+
+
   const handleFormSubmit = () => {
     dispatch(registerPatient(input));
   };
+
+  useEffect(() => {
+    if (message) {
+      createToast(message,"success");
+      dispatch(setMessageEmpty())
+      resetForm()
+    }
+    if (error) {
+      createToast(error)
+      dispatch(setMessageEmpty())
+
+    }
+  
+
+  }, [error,message,dispatch,resetForm])
+  
 
   return (
     <div>

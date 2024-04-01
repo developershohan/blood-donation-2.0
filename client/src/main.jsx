@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import store from './app/store.js'
 import {Provider} from "react-redux"
+
+import 'react-toastify/dist/ReactToastify.css';
+
 import "./assets/frontend/css/bootstrap.min.css"
 import "./assets/frontend/plugins/fontawesome/css/fontawesome.min.css"
 import "./assets/frontend/plugins/fontawesome/css/all.min.css"
