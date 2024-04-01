@@ -6,6 +6,7 @@ import userRouter from "./route/user.js";
 import authRouter from "./route/auth.js";
 import errorHandler from "./middlewares/errorhandler.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 // initialization
 const app = express();
@@ -20,7 +21,13 @@ app.use(express.urlencoded({ extended: false }));
 
 // static folder
 app.use(express.static("public"));
-app.use(cookieParser())
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 // routing
 app.use("/api/v1/user", userRouter);

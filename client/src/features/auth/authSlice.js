@@ -10,7 +10,9 @@ const authSlice = createSlice({
         loader: false
     },
     reducers: {},
-    extraReducers:()=>{}
+    extraReducers:(builder)=>{
+
+    }
 })
 
 // selector
