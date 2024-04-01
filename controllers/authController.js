@@ -20,7 +20,7 @@ import { AccountActivationEmail } from "../mails/AccountActivationEmail.js";
  * @access public
  */
 export const registerUser = asyncHandler(async (req, res) => {
-  const { name, auth, password } = req.body;
+  const { name, auth, password,role } = req.body;
 
   // validation
   if (!name || !auth || !password) {
@@ -65,6 +65,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     phone: authPhone,
     password: hashPass,
     accessToken: otp,
+    role:role
   });
 
   if (user) {

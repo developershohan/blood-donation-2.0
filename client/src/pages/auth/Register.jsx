@@ -7,11 +7,13 @@ import createToast from "../../utils/toastify";
 import { authSelector, setMessageEmpty } from "../../features/auth/authSlice";
 import { useEffect } from "react";
 const Register = () => {
+
   const dispatch = useDispatch();
+
   const { input, handleInputChange, resetForm } = useForm({
     name: "",
     auth: "",
-    password: "",
+    password: "",  role:"patient"
   });
 
   const {error,message,loader} = useSelector(authSelector)
@@ -102,7 +104,7 @@ const Register = () => {
                     <button
                       className="btn btn-primary w-100 btn-lg login-btn"
                       onClick={handleFormSubmit}>
-                      Signup
+                     {loader? "Creating" : "Signup"} 
                     </button>
                     <div className="login-or">
                       <span className="or-line" />

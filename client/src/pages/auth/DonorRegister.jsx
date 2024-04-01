@@ -1,7 +1,41 @@
-import {Link} from "react-router-dom"
-import bloodLogo from "../../assets/frontend/img/blood-logo.png"
+import { Link } from "react-router-dom";
+import bloodLogo from "../../assets/frontend/img/blood-logo.png";
+import createToast from "../../utils/toastify";
+import { authSelector, setMessageEmpty } from "../../features/auth/authSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import useForm from "../../hooks/useForm";
+import { registerDonor } from "../../features/auth/authApiSlice";
 
 const DonorRegister = () => {
+  const dispatch = useDispatch();
+
+  const { input, handleInputChange, resetForm } = useForm({
+    name: "",
+    auth: "",
+    password: "",
+    role:"donor"
+  });
+
+  const { error, message, loader } = useSelector(authSelector);
+
+  const handleFormSubmit = () => {
+    dispatch(registerDonor(input));
+  };
+
+  useEffect(() => {
+    if (message) {
+      createToast(message, "success");
+      dispatch(setMessageEmpty());
+      resetForm();
+    }
+    if (error) {
+      createToast(error);
+      dispatch(setMessageEmpty());
+    }
+  }, [error, message, dispatch, resetForm]);
+
   return (
     <div>
       <div className="content top-space">
@@ -26,49 +60,65 @@ const DonorRegister = () => {
                       </h3>
                     </div>
                     {/* Register Form */}
-                    <form action="patient-register-step1.html">
-                      <div className="mb-3 form-focus">
-                        <input type="text" className="form-control floating" />
-                        <label className="focus-label">Name</label>
+                    <div className="mb-3 form-focus">
+                      <input
+                        type="text"
+                        className="form-control floating"
+                        name="name"
+                        value={input.name}
+                        onChange={handleInputChange}
+                      />
+                      <label className="focus-label">Name</label>
+                    </div>
+                    <div className="mb-3 form-focus">
+                      <input
+                        type="text"
+                        className="form-control floating"
+                        name="auth"
+                        value={input.auth}
+                        onChange={handleInputChange}
+                      />
+                      <label className="focus-label">
+                        Mobile Number Or email address
+                      </label>
+                    </div>
+                    <div className="mb-3 form-focus">
+                      <input
+                        type="password"
+                        className="form-control floating"
+                        name="password"
+                        value={input.password}
+                        onChange={handleInputChange}
+                      />
+                      <label className="focus-label">Create Password</label>
+                    </div>
+                    <div className="text-end">
+                      <Link className="forgot-link" to="/login">
+                        Already have an account?
+                      </Link>
+                    </div>
+                    <button
+                      className="btn btn-primary w-100 btn-lg login-btn"
+                      onClick={handleFormSubmit}>
+                      {loader? "Creating" : "Signup"} 
+                    </button>
+                    <div className="login-or">
+                      <span className="or-line" />
+                      <span className="span-or">or</span>
+                    </div>
+                    <div className="row social-login">
+                      <div className="col-6">
+                        <a href="#" className="btn btn-facebook w-100">
+                          <i className="fab fa-facebook-f me-1" /> Login
+                        </a>
                       </div>
-                      <div className="mb-3 form-focus">
-                        <input type="text" className="form-control floating" />
-                        <label className="focus-label">Mobile Number</label>
+                      <div className="col-6">
+                        <a href="#" className="btn btn-google w-100">
+                          <i className="fab fa-google me-1" /> Login
+                        </a>
                       </div>
-                      <div className="mb-3 form-focus">
-                        <input
-                          type="password"
-                          className="form-control floating"
-                        />
-                        <label className="focus-label">Create Password</label>
-                      </div>
-                      <div className="text-end">
-                        <Link className="forgot-link" to="/login">
-                          Already have an account?
-                        </Link>
-                      </div>
-                      <button
-                        className="btn btn-primary w-100 btn-lg login-btn"
-                        type="submit">
-                        Signup
-                      </button>
-                      <div className="login-or">
-                        <span className="or-line" />
-                        <span className="span-or">or</span>
-                      </div>
-                      <div className="row social-login">
-                        <div className="col-6">
-                          <a href="#" className="btn btn-facebook w-100">
-                            <i className="fab fa-facebook-f me-1" /> Login
-                          </a>
-                        </div>
-                        <div className="col-6">
-                          <a href="#" className="btn btn-google w-100">
-                            <i className="fab fa-google me-1" /> Login
-                          </a>
-                        </div>
-                      </div>
-                    </form>
+                    </div>
+
                     {/* /Register Form */}
                   </div>
                 </div>
@@ -79,7 +129,7 @@ const DonorRegister = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DonorRegister
+export default DonorRegister;
