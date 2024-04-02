@@ -221,7 +221,7 @@ export const login = asyncHandler(async (req, res) => {
 
   res
     .status(200)
-    .json({ accessToken, user: loginUser, message: `login successfully` });
+    .json({ user: loginUser, message: `login successfully` });
 });
 
 // export const profile = (req,res)=>{

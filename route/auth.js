@@ -16,7 +16,7 @@ router.post("/register", registerUser);
 router.post("/account-activate-by-otp/:token", accountActivationByOTP);
 router.post("/login", login);
 router.get("/me", tokenVerify, getLoggedInUser)
-router.post("/logout",tokenVerify, userLogout);
+router.post("/logout", userLogout);
 
 // export default
 export default router;

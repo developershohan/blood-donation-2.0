@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, registerDonor, registerPatient } from "./authApiSlice";
+import { loginUser, logoutUser, registerDonor, registerPatient } from "./authApiSlice";
 
 // create auth slice
 const authSlice = createSlice({
@@ -53,6 +53,19 @@ const authSlice = createSlice({
         state.message = action.payload.message;
         state.user = action.payload.user;
         localStorage.setItem("loginUser", JSON.stringify(action.payload.user))
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.loader = true;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.loader = false;
+        state.error = action.error.message;
+      })
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        state.loader = false;
+        state.message = action.payload.message;
+        state.user = null;
+        localStorage.removeItem("loginUser")
       });
   },
 });

@@ -1,6 +1,19 @@
 import Avatar from "../../components/Layouts/Avatar/Avatar";
 
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../features/auth/authApiSlice";
+
 const Dashboard = () => {
+  const dispatch = useDispatch()
+
+  const handleLogout = (e)=>{
+    e.preventDefault()
+
+    dispatch(logoutUser())
+  }
+
+
+  
   return (
     <>
       <div className="content">
@@ -95,7 +108,7 @@ const Dashboard = () => {
                         </a>
                       </li>
                       <li>
-                        <a href="login.html">
+                        <a onClick={handleLogout}>
                           <i className="fas fa-sign-out-alt" />
                           <span>Logout</span>
                         </a>
