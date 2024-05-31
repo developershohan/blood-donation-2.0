@@ -4,7 +4,7 @@ import {
   getLoggedInUser,
   login,
   registerUser,
-  userLogout,
+  userLogout,passwordChange
 } from "../controllers/authController.js";
 import tokenVerify from "../middlewares/tokenVerify.js";
 
@@ -15,7 +15,8 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/account-activate-by-otp/:token", accountActivationByOTP);
 router.post("/login", login);
-router.get("/me", tokenVerify, getLoggedInUser)
+router.post("/me", tokenVerify, getLoggedInUser)
+router.post("/password-change", tokenVerify, passwordChange)
 router.post("/logout", userLogout);
 
 // export default

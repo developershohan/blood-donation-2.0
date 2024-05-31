@@ -24,7 +24,7 @@ const Login = () => {
     e.preventDefault()
   
     dispatch(loginUser(input));
-    console.log(input);
+
   };
 
   useEffect(() => {

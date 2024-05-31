@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getLoggedInUser, loginUser, logoutUser, registerDonor, registerPatient } from "./authApiSlice";
+import {
+  getLoggedInUser,
+  loginUser,
+  logoutUser,
+  registerDonor,
+  registerPatient,passwordChange
+} from "./authApiSlice";
 
 // create auth slice
 const authSlice = createSlice({
@@ -52,7 +58,7 @@ const authSlice = createSlice({
         state.loader = false;
         state.message = action.payload.message;
         state.user = action.payload.user;
-        localStorage.setItem("loginUser", JSON.stringify(action.payload.user))
+        localStorage.setItem("loginUser", JSON.stringify(action.payload.user));
       })
       .addCase(logoutUser.pending, (state) => {
         state.loader = true;
@@ -65,9 +71,9 @@ const authSlice = createSlice({
         state.loader = false;
         state.message = action.payload.message;
         state.user = null;
-        localStorage.removeItem("loginUser")
+        localStorage.removeItem("loginUser");
       })
-//check user login or not
+      //check user login or not
       .addCase(getLoggedInUser.pending, (state) => {
         state.loader = true;
       })
@@ -75,12 +81,25 @@ const authSlice = createSlice({
         state.loader = false;
         state.error = action.error.message;
         state.user = null;
-        localStorage.removeItem("loginUser")
+        localStorage.removeItem("loginUser");
       })
       .addCase(getLoggedInUser.fulfilled, (state, action) => {
         state.loader = false;
         state.user = action.payload.auth;
-localStorage.setItem("loginUser", JSON.stringify(action.payload.auth))
+        localStorage.setItem("loginUser", JSON.stringify(action.payload.auth));
+      })
+      // password Change
+      .addCase(passwordChange.pending, (state) => {
+        state.loader = true;
+      })
+      .addCase(passwordChange.rejected, (state, action) => {
+        state.loader = false;
+        state.error = action.error.message;
+    
+      })
+      .addCase(passwordChange.fulfilled, (state, action) => {
+        state.loader = false;
+        state.user = action.payload.message;
       });
   },
 });

@@ -20,7 +20,7 @@ import { AccountActivationEmail } from "../mails/AccountActivationEmail.js";
  * @access public
  */
 export const registerUser = asyncHandler(async (req, res) => {
-  const { name, auth, password,role } = req.body;
+  const { name, auth, password, role } = req.body;
 
   // validation
   if (!name || !auth || !password) {
@@ -65,7 +65,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     phone: authPhone,
     password: hashPass,
     accessToken: otp,
-    role:role
+    role: role,
   });
 
   if (user) {
@@ -219,9 +219,7 @@ export const login = asyncHandler(async (req, res) => {
     maxAge: 1000 * 60 * 60 * 24 * 365,
   });
 
-  res
-    .status(200)
-    .json({ user: loginUser, message: `login successfully` });
+  res.status(200).json({ user: loginUser, message: `login successfully` });
 });
 
 // export const profile = (req,res)=>{
@@ -252,4 +250,38 @@ export const getLoggedInUser = asyncHandler(async (req, res) => {
 export const userLogout = asyncHandler(async (req, res) => {
   res.clearCookie("accessToken");
   res.status(200).json({ message: "Logout Successful" });
+});
+
+/**
+ * @description  passwordChange
+ * @method POST
+ * @route /api/v1/auth/password-change
+ * @access private
+ */
+
+export const passwordChange = asyncHandler(async (req, res) => {
+  const { oldPass, newPass, confPass } = req.body;
+  if (!oldPass || !newPass || !confPass) {
+    return res.status(404).json({ message: "All the fields must be filed" });
+  }
+
+  // match new password
+  if (newPass !== confPass) {
+    return res.status(404).json({ message: "new password doesn't match" });
+      
+  }
+  // check old password
+  const user = await User.findOne(req.me._id)
+  console.log(user);
+  
+  if (!bcrypt.compareSync(oldPass, user.password)) {
+    return res.status(404).json({ message: "Current password doesn't match" });
+    
+  }
+
+  const hassPass = await bcrypt.hash(newPass,10)
+  user.password = hassPass
+  user.save()
+  
+  return res.status(200).json({ message: "New Password Saved" });
 });
