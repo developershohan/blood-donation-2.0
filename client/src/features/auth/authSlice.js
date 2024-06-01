@@ -4,7 +4,8 @@ import {
   loginUser,
   logoutUser,
   registerDonor,
-  registerPatient,passwordChange
+  registerPatient,passwordChange,
+  profilePhotoUpdate
 } from "./authApiSlice";
 
 // create auth slice
@@ -100,6 +101,20 @@ const authSlice = createSlice({
       .addCase(passwordChange.fulfilled, (state, action) => {
         state.loader = false;
         state.message = action.payload.message;
+      })
+      // upload photo
+      .addCase(profilePhotoUpdate.pending, (state) => {
+        state.loader = true;
+      })
+      .addCase(profilePhotoUpdate.rejected, (state, action) => {
+        state.loader = false;
+        state.error = action.error.message;
+    
+      })
+      .addCase(profilePhotoUpdate.fulfilled, (state, action) => {
+        state.loader = false;
+        state.message = action.payload.message;
+        state.user = action.payload.user;
       });
   },
 });

@@ -299,5 +299,5 @@ const profileData = await User.findOne({email: data.auth})
 profileData.photo = filedata.secure_url
 profileData.save()
 
-res.status(200).json({user: profileData})
+res.status(200).json({user: profileData,message: "profile photo updated successfully"})
 })
