@@ -1,8 +1,21 @@
 import React from "react";
 import useAuth from "../../hooks/useAuth";
 import Avatar from "../../components/Layouts/Avatar/Avatar";
+import { profilePhotoUpdate } from "../../features/auth/authApiSlice";
+import {useDispatch} from "react-redux"
 
 const ProfileSetting = () => {
+
+  const dispatch = useDispatch();
+
+  const handleProfilePhotoChange = (e) => {
+    const profilePhoto = e.target.files[0];
+
+    const form_data = new FormData();
+    form_data.append("profile-photo", profilePhoto);
+
+    dispatch(profilePhotoUpdate(form_data));
+  };
   const { auth } = useAuth();
   return (
     <div>
@@ -21,7 +34,11 @@ const ProfileSetting = () => {
                       <span>
                         <i className="fa fa-upload" /> Upload Photo
                       </span>
-                      <input type="file" className="upload" />
+                      <input
+                        type="file"
+                        className="upload"
+                        onChange={handleProfilePhotoChange}
+                      />
                     </div>
                     <small className="form-text text-muted">
                       Allowed JPG, GIF or PNG. Max size of 2MB

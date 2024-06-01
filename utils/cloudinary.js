@@ -2,9 +2,9 @@ import cloudinay from "cloudinary";
 
 // configuration
 cloudinay.v2.config({
-  cloud_name: "dis89p0kx",
-  api_key: "179378785211637",
-  api_secret: "fjH24wym4yj0jxJRXm-2Bh7EbLw",
+  cloud_name: "dl1ru15me",
+  api_key: "618321172373116",
+  api_secret: "Laco4G0dv7C8ijypWE0Qv5JoBxs",
 });
 
 // file upload to cloude

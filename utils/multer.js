@@ -8,4 +8,4 @@ const storage = multer.diskStorage({
 });
 
 // multer middlewares
-export const userPhoto = multer({ storage }).single("user-photo");
+export const profilePhoto = multer({ storage }).single("profile-photo");

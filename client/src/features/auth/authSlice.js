@@ -99,7 +99,7 @@ const authSlice = createSlice({
       })
       .addCase(passwordChange.fulfilled, (state, action) => {
         state.loader = false;
-        state.user = action.payload.message;
+        state.message = action.payload.message;
       });
   },
 });

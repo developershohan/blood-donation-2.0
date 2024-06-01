@@ -2,7 +2,6 @@ import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
-import { fileDeleteFromCloud, fileUploadToCloud } from "../utils/cloudinary.js";
 import {
   createOTP,
   findPublicId,
@@ -12,6 +11,7 @@ import {
 } from "../helpers/helpers.js";
 import { sendSMS } from "../utils/sendSMS.js";
 import { AccountActivationEmail } from "../mails/AccountActivationEmail.js";
+import { fileUploadToCloud } from "../utils/cloudinary.js";
 
 /**
  * @description  User Register
@@ -272,7 +272,6 @@ export const passwordChange = asyncHandler(async (req, res) => {
   }
   // check old password
   const user = await User.findOne(req.me._id)
-  console.log(user);
   
   if (!bcrypt.compareSync(oldPass, user.password)) {
     return res.status(404).json({ message: "Current password doesn't match" });
@@ -285,3 +284,20 @@ export const passwordChange = asyncHandler(async (req, res) => {
   
   return res.status(200).json({ message: "New Password Saved" });
 });
+
+
+
+export const profilePhotoUpdate = asyncHandler(async(req,res)=>{
+
+  const filedata = await fileUploadToCloud(req.file.path)
+
+
+  const data = jwt.verify(req.cookies.accessToken,process.env.USER_LOGIN_SECRET)
+
+const profileData = await User.findOne({email: data.auth})
+
+profileData.photo = filedata.secure_url
+profileData.save()
+
+res.status(200).json({user: profileData})
+})

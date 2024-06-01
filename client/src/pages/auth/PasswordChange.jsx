@@ -4,12 +4,11 @@ import createToast from "../../utils/toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelector, setMessageEmpty } from "../../features/auth/authSlice";
 import { passwordChange } from "../../features/auth/authApiSlice";
-import useAuth from "../../hooks/useAuth";
+
 
 const PasswordChange = () => {
   const dispatch = useDispatch();
   const { error, message } = useSelector(authSelector);
-  const { auth } = useAuth();
 
   const { input, handleInputChange, resetForm } = useForm({
     oldPass: "",
